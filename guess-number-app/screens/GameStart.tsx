@@ -1,4 +1,4 @@
-import { StyleSheet, Text, TextInput, View } from "react-native";
+import { Alert, StyleSheet, Text, TextInput, View } from "react-native";
 import CustomButton from "../components/CustomButton";
 import { useState } from "react";
 import { colors } from "../utils/colors";
@@ -14,6 +14,12 @@ const styles = StyleSheet.create({
     marginTop: 32,
     textAlign: "center",
     fontSize: 22,
+  },
+  subHeader: {
+    fontSize: 14,
+    color: colors.lightGreen,
+    textAlign: "center",
+    marginTop: 4,
   },
   input: {
     borderColor: "white",
@@ -43,9 +49,10 @@ function UserNumberSelection({ selectNumber }: IUserNumberSelectionProps) {
   const [value, setValue] = useState<null | number>(null);
 
   const onInputChange = (val: string) => {
-    if (!val) setValue(null);
+    if (!val && val !== "0") setValue(null);
 
     const parsetStr = parseFloat(val);
+    console.log("val", parsetStr, !isNaN(parsetStr));
 
     if (!isNaN(parsetStr)) setValue(parsetStr);
   };
@@ -54,19 +61,30 @@ function UserNumberSelection({ selectNumber }: IUserNumberSelectionProps) {
     setValue(null);
   };
 
-  const onConfirmClick = () => {
-    if (value) selectNumber(value);
+  const onAlertConfirm = () => {
+    setValue(null);
   };
+
+  const onConfirmClick = () => {
+    if (value && value >= 0 && value <= 99) selectNumber(value);
+    else
+      Alert.alert("Wrong number", "Your number should be between 0 and 100", [
+        { text: "Ok", style: "default", onPress: onAlertConfirm },
+      ]);
+  };
+
+  const isButtonDisabled = !value && value !== 0;
 
   return (
     <View style={styles.container}>
       <Text style={styles.header}>Please, pick your number:</Text>
+      <Text style={styles.subHeader}>(Value should be between 0 and 100)</Text>
       <TextInput
         keyboardType="number-pad"
         style={styles.input}
         maxLength={3}
         autoFocus={true}
-        value={!!value ? value.toString() : ""}
+        value={value !== null ? value.toString() : ""}
         onChangeText={onInputChange}
       />
       <View style={styles.buttonContainer}>
@@ -82,7 +100,7 @@ function UserNumberSelection({ selectNumber }: IUserNumberSelectionProps) {
           onPress={onConfirmClick}
           textColor={colors.black}
           title="Confirm"
-          isDisabled={!value}
+          isDisabled={isButtonDisabled}
         />
       </View>
     </View>

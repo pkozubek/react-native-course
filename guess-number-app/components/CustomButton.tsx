@@ -45,7 +45,11 @@ function CustomButton({
   return (
     <View style={styles.view}>
       <Pressable
-        style={{ ...styles.pressable, backgroundColor: buttonColor }}
+        style={{
+          ...styles.pressable,
+          backgroundColor: buttonColor,
+          opacity: isDisabled ? 0.3 : 1,
+        }}
         onPress={onPress}
         disabled={isDisabled}
         android_ripple={andoridRippleEffect}
