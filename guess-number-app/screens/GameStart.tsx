@@ -52,8 +52,6 @@ function UserNumberSelection({ selectNumber }: IUserNumberSelectionProps) {
     if (!val && val !== "0") setValue(null);
 
     const parsetStr = parseFloat(val);
-    console.log("val", parsetStr, !isNaN(parsetStr));
-
     if (!isNaN(parsetStr)) setValue(parsetStr);
   };
 

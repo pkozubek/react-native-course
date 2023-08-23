@@ -1,4 +1,4 @@
-import { Text, View } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 import CustomButton from "./CustomButton";
 import { colors } from "../utils/colors";
 
@@ -6,21 +6,36 @@ type IUserSuggestionProps = {
   lastComputerGuess: null | number;
   suggestBigger: () => void;
   suggestSmaller: () => void;
-  userNumber: number;
 };
+
+const styles = StyleSheet.create({
+  flexWrapper: {
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  guess: {
+    flexBasis: "80%",
+  },
+  guessText: {
+    color: colors.white,
+    textAlign: "center",
+    fontSize: 20,
+  },
+  button: {
+    flexBasis: "10%",
+  },
+});
 
 function UserSuggestion({
   lastComputerGuess,
-  userNumber,
   suggestBigger,
   suggestSmaller,
 }: IUserSuggestionProps) {
   return (
     <View>
-      <Text>Your number: {userNumber}</Text>
       {lastComputerGuess !== null ? (
-        <View>
-          <View>
+        <View style={styles.flexWrapper}>
+          <View style={styles.button}>
             <CustomButton
               buttonColor={colors.lightGreen}
               textColor={colors.black}
@@ -28,8 +43,10 @@ function UserSuggestion({
               title="-"
             />
           </View>
-          <Text>Last computer guess: {lastComputerGuess}</Text>
-          <View>
+          <View style={styles.guess}>
+            <Text style={styles.guessText}>{lastComputerGuess}</Text>
+          </View>
+          <View style={styles.button}>
             <CustomButton
               buttonColor={colors.lightGreen}
               textColor={colors.black}

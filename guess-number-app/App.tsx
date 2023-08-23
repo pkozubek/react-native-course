@@ -44,6 +44,11 @@ export default function App() {
       currentMax = lastGuess - 1;
     }
 
+    if (userNumber && !(currentMin <= userNumber && userNumber <= currentMax)) {
+      console.log("YOU LIER!");
+      return;
+    }
+
     const nextNumber = generateNextGuess(currentMin, currentMax);
 
     setComputerGuesses((currentGuesses) => [...currentGuesses, nextNumber]);
@@ -57,8 +62,6 @@ export default function App() {
       });
     }
   };
-
-  console.log(currentRange);
 
   if (!userNumber) return <GameStart selectNumber={onSelectNumber} />;
   if (isGameEnd)
