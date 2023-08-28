@@ -1,26 +1,12 @@
 import { Alert, StyleSheet, Text, TextInput, View } from "react-native";
-import CustomButton from "../components/CustomButton";
 import { useState } from "react";
+
+import CustomButton from "../components/CustomButton";
+
 import { colors } from "../utils/colors";
+import sharedStyles from "../utils/sharedStyles";
 
 const styles = StyleSheet.create({
-  container: {
-    backgroundColor: "black",
-    flex: 1,
-    padding: 8,
-  },
-  header: {
-    color: "white",
-    marginTop: 32,
-    textAlign: "center",
-    fontSize: 22,
-  },
-  subHeader: {
-    fontSize: 14,
-    color: colors.lightGreen,
-    textAlign: "center",
-    marginTop: 4,
-  },
   input: {
     borderColor: "white",
     borderBottomWidth: 2,
@@ -31,11 +17,6 @@ const styles = StyleSheet.create({
     width: 120,
     height: 80,
     textAlign: "center",
-    marginLeft: "auto",
-    marginRight: "auto",
-  },
-  buttonContainer: {
-    width: "80%",
     marginLeft: "auto",
     marginRight: "auto",
   },
@@ -64,19 +45,23 @@ function UserNumberSelection({ selectNumber }: IUserNumberSelectionProps) {
   };
 
   const onConfirmClick = () => {
-    if (value && value >= 0 && value <= 99) selectNumber(value);
+    if (value !== null && value > 0 && value < 100) selectNumber(value);
     else
-      Alert.alert("Wrong number", "Your number should be between 0 and 100", [
-        { text: "Ok", style: "default", onPress: onAlertConfirm },
-      ]);
+      Alert.alert(
+        "Wrong number",
+        "Your number should be higher than 0 lower than 100",
+        [{ text: "Ok", style: "default", onPress: onAlertConfirm }]
+      );
   };
 
-  const isButtonDisabled = !value && value !== 0;
+  const isButtonDisabled = value === null;
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.header}>Please, pick your number:</Text>
-      <Text style={styles.subHeader}>(Value should be between 0 and 100)</Text>
+    <View style={sharedStyles.container}>
+      <Text style={sharedStyles.header}>Please, pick your number:</Text>
+      <Text style={sharedStyles.subHeader}>
+        (Value should be between 0 and 100)
+      </Text>
       <TextInput
         keyboardType="number-pad"
         style={styles.input}
@@ -85,14 +70,13 @@ function UserNumberSelection({ selectNumber }: IUserNumberSelectionProps) {
         value={value !== null ? value.toString() : ""}
         onChangeText={onInputChange}
       />
-      <View style={styles.buttonContainer}>
+      <View style={sharedStyles.buttonContainer}>
         <CustomButton
           buttonColor={colors.white}
           onPress={onCancel}
           textColor={colors.black}
           title="Cancel"
         />
-
         <CustomButton
           buttonColor={colors.lightGreen}
           onPress={onConfirmClick}

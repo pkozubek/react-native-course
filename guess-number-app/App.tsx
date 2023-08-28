@@ -1,7 +1,11 @@
 import { useState } from "react";
+import { Alert } from "react-native";
+import { useFonts } from "expo-font";
+
 import GameEnd from "./screens/GameEnd";
 import Game from "./screens/Game";
 import GameStart from "./screens/GameStart";
+
 import { MAX, MIN } from "./utils/const";
 
 export default function App() {
@@ -9,6 +13,15 @@ export default function App() {
   const [computerGuesses, setComputerGuesses] = useState<number[]>([]);
   const [isGameEnd, setGameEnd] = useState(false);
   const [currentRange, setCurrentRange] = useState({ min: MIN, max: MAX });
+
+  const [fontsLoaded] = useFonts({
+    "open-sans": require("./assets/fonts/OpenSans-Regular.ttf"),
+    "open-sans-bold": require("./assets/fonts/OpenSans-Bold.ttf"),
+  });
+
+  if (!fontsLoaded) {
+    return null;
+  }
 
   const resetGame = () => {
     setUserNumber(null);
@@ -45,7 +58,9 @@ export default function App() {
     }
 
     if (userNumber && !(currentMin <= userNumber && userNumber <= currentMax)) {
-      console.log("YOU LIER!");
+      Alert.alert("YOU LIER!", undefined, [
+        { text: "I am sorry :(", style: "cancel" },
+      ]);
       return;
     }
 

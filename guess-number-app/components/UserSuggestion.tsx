@@ -20,6 +20,7 @@ const styles = StyleSheet.create({
     color: colors.white,
     textAlign: "center",
     fontSize: 20,
+    fontFamily: "open-sans",
   },
   button: {
     flexBasis: "10%",
@@ -37,10 +38,10 @@ function UserSuggestion({
         <View style={styles.flexWrapper}>
           <View style={styles.button}>
             <CustomButton
-              buttonColor={colors.lightGreen}
-              textColor={colors.black}
+              buttonColor={colors.transparent}
+              textColor={colors.lightGreen}
               onPress={suggestSmaller}
-              title="-"
+              iconName="minuscircle"
             />
           </View>
           <View style={styles.guess}>
@@ -48,10 +49,10 @@ function UserSuggestion({
           </View>
           <View style={styles.button}>
             <CustomButton
-              buttonColor={colors.lightGreen}
-              textColor={colors.black}
+              buttonColor={colors.transparent}
+              textColor={colors.lightGreen}
               onPress={suggestBigger}
-              title="+"
+              iconName="pluscircle"
             />
           </View>
         </View>

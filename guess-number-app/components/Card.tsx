@@ -1,7 +1,7 @@
 import { StyleSheet, Text, View } from "react-native";
 import { colors } from "../utils/colors";
 
-type IContentWrapperProps = {
+type ICardProps = {
   children: JSX.Element | JSX.Element[];
   title?: string;
   takeRestOfScreen?: boolean;
@@ -19,17 +19,14 @@ const styles = StyleSheet.create({
     color: colors.white,
     fontSize: 18,
     textAlign: "center",
+    fontFamily: "open-sans-bold",
   },
   content: {
     marginTop: 8,
   },
 });
 
-function ContentWrapper({
-  children,
-  title,
-  takeRestOfScreen = false,
-}: IContentWrapperProps) {
+function Card({ children, title, takeRestOfScreen = false }: ICardProps) {
   return (
     <View
       style={{
@@ -43,4 +40,4 @@ function ContentWrapper({
   );
 }
 
-export default ContentWrapper;
+export default Card;

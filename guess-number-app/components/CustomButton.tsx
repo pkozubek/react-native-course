@@ -5,14 +5,17 @@ import {
   Text,
   View,
 } from "react-native";
+import { AntDesign } from "@expo/vector-icons";
+
 import { colors } from "../utils/colors";
 
 export type ICustomButtonProps = {
-  title: string;
+  title?: string;
   textColor: string;
   buttonColor: string;
   onPress: () => void;
   isDisabled?: boolean;
+  iconName?: keyof typeof AntDesign.glyphMap;
 };
 
 const styles = StyleSheet.create({
@@ -28,6 +31,7 @@ const styles = StyleSheet.create({
   text: {
     textAlign: "center",
     fontSize: 18,
+    fontFamily: "open-sans-bold",
   },
 });
 
@@ -41,6 +45,7 @@ function CustomButton({
   textColor,
   title,
   isDisabled = false,
+  iconName,
 }: ICustomButtonProps) {
   return (
     <View style={styles.view}>
@@ -54,7 +59,10 @@ function CustomButton({
         disabled={isDisabled}
         android_ripple={andoridRippleEffect}
       >
-        <Text style={{ ...styles.text, color: textColor }}>{title}</Text>
+        {title && (
+          <Text style={{ ...styles.text, color: textColor }}>{title}</Text>
+        )}
+        {iconName && <AntDesign name={iconName} size={18} color={textColor} />}
       </Pressable>
     </View>
   );

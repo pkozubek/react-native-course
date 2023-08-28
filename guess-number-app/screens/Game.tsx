@@ -10,8 +10,9 @@ import {
 import Background from "../components/Background";
 import UserSuggestion from "../components/UserSuggestion";
 import ComputerGuessItem from "../components/ComputerGuessItem";
-import ContentWrapper from "../components/ContentWrapper";
+import Card from "../components/Card";
 import CustomButton from "../components/CustomButton";
+
 import { colors } from "../utils/colors";
 
 type IGame = {
@@ -54,6 +55,10 @@ const styles = StyleSheet.create({
     fontSize: 16,
     marginVertical: 8,
   },
+  listWrapper: {
+    flex: 1,
+    padding: 16,
+  },
 });
 
 function Game({ computerGuesses, reset, suggestNumber, userNumber }: IGame) {
@@ -78,7 +83,7 @@ function Game({ computerGuesses, reset, suggestNumber, userNumber }: IGame) {
     <Background>
       <SafeAreaView style={styles.root}>
         <View style={styles.viewContainer}>
-          <ContentWrapper title="Your numer">
+          <Card title="Your numer">
             <View style={styles.flexWrapper}>
               <View style={styles.halfOfScreen}>
                 <Text style={styles.text}>{userNumber}</Text>
@@ -92,22 +97,25 @@ function Game({ computerGuesses, reset, suggestNumber, userNumber }: IGame) {
                 />
               </View>
             </View>
-          </ContentWrapper>
-          <ContentWrapper title="Computer guesses">
+          </Card>
+          <Card title="Computer guesses">
             <UserSuggestion
               lastComputerGuess={computerGuesses[computerGuesses.length - 1]}
               suggestBigger={suggestBigger}
               suggestSmaller={suggestSmaller}
             />
-          </ContentWrapper>
+          </Card>
           <Text style={styles.sectionHeader}>History</Text>
           <Text style={styles.sectionSubHeader}>
             Number of guesses: {computerGuesses.length}
           </Text>
-          <FlatList
-            data={computerGuesses.slice().reverse()}
-            renderItem={renderItem}
-          />
+          <View style={styles.listWrapper}>
+            <FlatList
+              data={computerGuesses.slice().reverse()}
+              keyExtractor={(item) => item.toString()}
+              renderItem={renderItem}
+            />
+          </View>
         </View>
       </SafeAreaView>
     </Background>

@@ -26,7 +26,7 @@ function ComputerGuessItem({ order, value }: IComputerGuessItemProps) {
   return (
     <View style={styles.view}>
       <Text style={styles.text}>#{order}</Text>
-      <Text style={styles.text}>{value}</Text>
+      <Text style={styles.text}>Computer guess: {value}</Text>
     </View>
   );
 }
